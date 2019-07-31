@@ -12,6 +12,8 @@ Features:
 */
 
 import controlP5.*;
+import beads.*;
+import org.jaudiolibs.beads.*;
 
 void setup(){
   size(800, 600, P3D);
