@@ -15,7 +15,6 @@ import controlP5.*;
 
 void setup(){
   size(800, 600, P3D);
-  //smooth();
   strokeCap(SQUARE);
 
   setupGUI();

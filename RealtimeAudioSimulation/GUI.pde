@@ -6,6 +6,7 @@ DropdownList BuildTypeDL;
 Slider ThicknessSlider;
 RadioButton ActionSelectR;
 
+
 void setupGUI() {
 
   cp5 = new ControlP5(this);
@@ -34,15 +35,9 @@ void setupGUI() {
          .addItem("Remove",4);
 
   customize(BuildTypeDL); // customize lists
-  BuildTypeDL.addItem("Brick", 0);
-  BuildTypeDL.addItem("Wood", 1);
-  BuildTypeDL.addItem("Speaker", 2);
-  BuildTypeDL.addItem("Sim Ears", 3);
+                                   // 0,      1,      2,        3,          4,         5,         6
+  BuildTypeDL.addItems(new String[] {"Brick", "Wood", "Marble", "Curtains", "Plywood", "Speaker", "Sim Mic"});
 
-}
-
-void ActionSelect(float v){
-  println(v);
 }
 
 void customize(DropdownList ddl) {
@@ -57,16 +52,27 @@ void customize(DropdownList ddl) {
 
 
 void controlEvent(ControlEvent theEvent) {
-  boolean DEBUG = false;
   
   if (theEvent.isFrom(ActionSelectR)) {
     int val = (int)theEvent.getValue();
     if(val != 3){ // value 3 = building
       showLine = false; // Cancel current wall build
     }
-    if(val != 1){ // value 3 = building
+    if(val != 1){ // value 1 = select
       SelectedID = -1; // Cancel selection
     }
+  }
+  
+  if (theEvent.isFrom(BuildTypeDL)) {
+    showLine = false; // Cancel current wall build
+    
+    int val = (int)theEvent.getValue();
+    SelectedBuildType = val;
+  }
+  
+  if (theEvent.isFrom(ThicknessSlider)) {
+    float val = (float)theEvent.getValue();
+    showLine = false;
   }
   
   // DropdownList is of type ControlGroup.
@@ -74,7 +80,8 @@ void controlEvent(ControlEvent theEvent) {
   // therefore you need to check the originator of the Event with
   // if (theEvent.isGroup())
   // to avoid an error message thrown by controlP5.
-
+  boolean DEBUG = false;
+  
   if (theEvent.isGroup() && DEBUG) {
     // check if the Event was triggered from a ControlGroup
     println("event from group : "+theEvent.getGroup().getValue()+" from "+theEvent.getGroup());

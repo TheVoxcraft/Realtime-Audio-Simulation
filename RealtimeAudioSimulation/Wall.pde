@@ -3,34 +3,37 @@ ArrayList<Wall> walls = new ArrayList<Wall>();
 import java.util.Map;
 
 color wallColor = color(255);
-float WALL_WIDTH_MULTIPLIER = 2;
 
-HashMap<String,float[]> WallCoefficients = new HashMap<String,float[]>();
-HashMap<String,int[]> WallColors = new HashMap<String,int[]>();
-void InitWallCoefficients(){
-  WallCoefficients.put("wood",new float[] {.15, .11, .10, .07, .06, .3});
-  //WallCoefficients.put("brick",new Float[] {});
-}
+float[] WALL_COEFF_WOOD = {.15, .11, .10, .07, .06, .03};
+float[] WALL_COEFF_PLYWOOD = {.25, .1, .05, .04, .09, .06};
+float[] WALL_COEFF_MARBLE = {.01, .01, .01, .01, .02, .015};
+float[] WALL_COEFF_BRICK = {.03, .03, .03, .04, .05, .04};
+float[] WALL_COEFF_CURTAINS = {.15, .35, .55, .75, .70, .50};
+
+HashMap<Integer,Integer[]> WallColors = new HashMap<Integer,Integer[]>();
+
 void InitWallColors(){
-  WallColors.put("wood",new int[] {200, 150, 120});
-  WallColors.put("brick",new int[] {230, 230, 230});
+  WallColors.put(0,new Integer[] {100, 30, 30});
+  WallColors.put(1,new Integer[] {160, 120, 110});
 }
+
 
 
 class Wall{
  float thickness;
  PVector StartPos;
  PVector EndPos;
- float[] WallCoefficient = new float[6]; // 125, 250, 500, 1000, 2000, 8000
+ float[] WallCoefficient; // 125, 250, 500, 1000, 2000, 8000
  boolean flat;
  
- String type = "wood";
+ int type = 0;
  int ID;
 
  Wall(PVector _sp, PVector _ep, float _t, boolean _f){
    ID = (int)random(10000,99999);
    
-   WallCoefficient = new float[] {.15, .11, .10, .07, .06, .3};
+   WallCoefficient = WALL_COEFF_WOOD;
+   
    
    thickness = _t;
    StartPos = _sp;
@@ -41,7 +44,7 @@ class Wall{
  void display(){
    stroke(WallColors.get(type)[0],WallColors.get(type)[1],WallColors.get(type)[2]);
    
-   strokeWeight(thickness * WALL_WIDTH_MULTIPLIER);
+   strokeWeight(thickness);
    line(StartPos.x, StartPos.y, EndPos.x, EndPos.y);
    
    //testLines(); // DEBUG
@@ -52,11 +55,11 @@ class Wall{
    PVector cornerB = new PVector(EndPos.x, EndPos.y);
    
    if(flat == false){
-     cornerA.x-=thickness;
-     cornerB.x+=thickness;
+     cornerA.x-=thickness*.5;
+     cornerB.x+=thickness*.5;
    } else if(flat == true){
-     cornerA.y-=thickness;
-     cornerB.y+=thickness;
+     cornerA.y-=thickness*.5;
+     cornerB.y+=thickness*.5;
    }
    
    /*
@@ -87,11 +90,11 @@ boolean isBetween(float n, float a, float b) {
    
    PVector other = new PVector(mouseX, mouseY);
    if(flat == false){
-     cornerA.x-=thickness;
-     cornerB.x+=thickness;
+     cornerA.x-=thickness*.5;
+     cornerB.x+=thickness*.5;
    } else if(flat == true){
-     cornerA.y-=thickness;
-     cornerB.y+=thickness;
+     cornerA.y-=thickness*.5;
+     cornerB.y+=thickness*.5;
    }
    noStroke();
    fill(255,100,50);
@@ -100,12 +103,4 @@ boolean isBetween(float n, float a, float b) {
    ellipse(cornerB.x,cornerB.y,5,5);
  }
 
-}
-
-
-class WallTypes{
-  class wood{
-    color COLOR = color();
-  }
-  
 }
