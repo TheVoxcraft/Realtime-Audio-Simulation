@@ -12,7 +12,8 @@ void setupGUI() {
   cp5 = new ControlP5(this);
   // create a DropdownList
   BuildTypeDL = cp5.addDropdownList("Build Type")
-          .setPosition(width-100, 75);
+          .setPosition(width-100, 75)
+          .setValue(0);
 
   ThicknessSlider = cp5.addSlider("Thickness (cm)")
      .setPosition(width-310, 20)
@@ -36,7 +37,7 @@ void setupGUI() {
 
   customize(BuildTypeDL); // customize lists
                                    // 0,      1,      2,        3,          4,         5,         6
-  BuildTypeDL.addItems(new String[] {"Brick", "Wood", "Marble", "Curtains", "Plywood", "Speaker", "Sim Mic"});
+  BuildTypeDL.addItems(new String[] {"Brick", "Wood", "Marble", "Curtains", "Plywood", "Speaker", "Microphone"});
 
 }
 

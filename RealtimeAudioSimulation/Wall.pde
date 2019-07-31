@@ -14,7 +14,10 @@ HashMap<Integer,Integer[]> WallColors = new HashMap<Integer,Integer[]>();
 
 void InitWallColors(){
   WallColors.put(0,new Integer[] {100, 30, 30});
-  WallColors.put(1,new Integer[] {160, 120, 110});
+  WallColors.put(1,new Integer[] {150, 110, 100});
+  WallColors.put(2,new Integer[] {255, 255, 255});
+  WallColors.put(3,new Integer[] {40, 40, 120});
+  WallColors.put(4,new Integer[] {190, 160, 140});
 }
 
 
@@ -26,19 +29,25 @@ class Wall{
  float[] WallCoefficient; // 125, 250, 500, 1000, 2000, 8000
  boolean flat;
  
- int type = 0;
+ int type;
  int ID;
 
- Wall(PVector _sp, PVector _ep, float _t, boolean _f){
+ Wall(PVector _sp, PVector _ep, float _t, boolean _f, int _type){
    ID = (int)random(10000,99999);
-   
-   WallCoefficient = WALL_COEFF_WOOD;
-   
    
    thickness = _t;
    StartPos = _sp;
    EndPos = _ep;
    flat = _f;
+   type = _type;
+   
+   switch(type){
+     case 0: WallCoefficient = WALL_COEFF_BRICK;
+     case 1: WallCoefficient = WALL_COEFF_WOOD;
+     case 2: WallCoefficient = WALL_COEFF_MARBLE;
+     case 3: WallCoefficient = WALL_COEFF_CURTAINS;
+     case 4: WallCoefficient = WALL_COEFF_PLYWOOD;
+   }
  }
 
  void display(){

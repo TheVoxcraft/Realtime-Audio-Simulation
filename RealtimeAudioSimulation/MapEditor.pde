@@ -6,7 +6,7 @@ PVector showEndPos = new PVector(0,0);
 float showSelectedTickness;
 
 int SelectedID = -1;
-int SelectedBuildType = -1; 
+int SelectedBuildType = 0; 
 
 void MapEditorSetup(){
   InitWallColors();
@@ -23,15 +23,23 @@ void showBuildingLine(){
 void MapEditorClick(){
   if(!isMouseOverGUI()){
     float ActionSelectValue = ActionSelectR.getValue(); // Build: int 3
-    if(ActionSelectValue == 3 && showLine == false){
+    if(ActionSelectValue == 3 && showLine == false && SelectedBuildType <= 4){
       showStartPos = new PVector((round(mouseX/WALL_BUILD_STEP_SIZE))*WALL_BUILD_STEP_SIZE, (round(mouseY/WALL_BUILD_STEP_SIZE))*WALL_BUILD_STEP_SIZE);
       showEndPos = new PVector((round(mouseX/WALL_BUILD_STEP_SIZE))*WALL_BUILD_STEP_SIZE, (round(mouseY/WALL_BUILD_STEP_SIZE))*WALL_BUILD_STEP_SIZE);
       showSelectedTickness = ThicknessSlider.getValue();
       showLine = true;
   
-    } else if(ActionSelectValue == 3 && showLine == true && !isMouseOverGUI()){
+    } else if(ActionSelectValue == 3 && showLine == true){
       showLine = false;
       BuildLine();
+    }
+    
+    if(ActionSelectValue == 3 && SelectedBuildType == 5){ 
+      BuildSpeaker();
+    }
+    
+    if(ActionSelectValue == 3 && SelectedBuildType == 5){ 
+      BuildMicrophone();
     }
     
     if(ActionSelectValue == 4){ // Remove: int 4
@@ -100,5 +108,15 @@ void BuildingLine(){
 }
 
 void BuildLine(){
-  walls.add(new Wall(showStartPos, showEndPos, showSelectedTickness, isFlat));
+  walls.add(new Wall(showStartPos, showEndPos, showSelectedTickness, isFlat, SelectedBuildType));
+}
+
+void BuildMicrophone(){
+
+
+}
+
+void BuildSpeaker(){
+  
+
 }
